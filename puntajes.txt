@@ -1,0 +1,10 @@
+xdd: 5000
+None: 2170
+None: 1810
+None: 825
+xd: 510
+None: 400
+fsbi: 40
+None: 40
+None: 40
+None: 40
