@@ -1,4 +1,6 @@
 xdd: 5000
+el mas ´perron: 5000
+None: 3325
 None: 2170
 None: 1810
 None: 825

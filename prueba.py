@@ -32,7 +32,7 @@ def mostrar_menu():
             if evento.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-            if evento.type == pygame.MOUSEBUTTONDOWN:
+            if evento.type == pygame.MOUSEBUTTONDOWN:#verifica si se hizo clic en algun boton
 
                 if jugar_btn.get_rect(topleft=(20, 100)).collidepoint(evento.pos):
                     return
@@ -41,7 +41,7 @@ def mostrar_menu():
                 if acerca_btn.get_rect(topleft=(20, 300)).collidepoint(evento.pos):
                     mostrar_informacion(pantalla)
 
-        pantalla.blit(fondo, (0, 0))
+        pantalla.blit(fondo, (0, 0))#muestra el fondo en la pantalla
         pantalla.blit(jugar_btn, (20, 100))
         pantalla.blit(records_btn, (20, 200))
         pantalla.blit(acerca_btn,(20, 300))
@@ -63,7 +63,7 @@ def mostrar_informacion(pantalla):
     texto5 = "ingenieria en computadores"
     texto6 = "Profesor:Jeff Schmidt Peralta"
     texto7 = "año 2023 Costa Rica"
-    texto_superficie = fuente.render(texto, True, (255, 255, 255))
+    texto_superficie = fuente.render(texto, True, (255, 255, 255)) # renderiza el texto
     texto_superficie2 = fuente.render(texto2, True, (255, 255, 255))
     texto_superficie22 = fuente.render(texto22, True, (255, 255, 255))
     texto_superficie222 = fuente.render(texto222, True, (255, 255, 255))
@@ -72,7 +72,7 @@ def mostrar_informacion(pantalla):
     texto_superficie5 = fuente.render(texto5, True, (255, 255, 255))
     texto_superficie6 = fuente.render(texto6, True, (255, 255, 255))
     texto_superficie7 = fuente.render(texto7, True, (255, 255, 255))
-    texto_rect7 = texto_superficie7.get_rect()
+    texto_rect7 = texto_superficie7.get_rect()#posiciona el texto en la pantalla
     texto_rect6 = texto_superficie6.get_rect()
     texto_rect5 = texto_superficie5.get_rect()
     texto_rect4 = texto_superficie4.get_rect()
@@ -136,14 +136,14 @@ class Fantasmas:
         self.fantasmaVerde = pygame.image.load("fantasmas/nuevo.png")
         self.fantasmaAzul = pygame.image.load("fantasmas/fantasmaAzul.png")
         self.estadoVulnerable = pygame.image.load("fantasmas/Vulnerable.png")
-        self.imagen = self.fantasmaRojo
+
 
 
     def mover(self, tablero):
-        nueva_posicion_x = self.posicion_x
+        nueva_posicion_x = self.posicion_x # Guarda las posiciones actuales del fantasma
         nueva_posicion_y = self.posicion_y
 
-        if self.direccion == "arriba":
+        if self.direccion == "arriba":# Actualiza las posiciones según la dirección del fantasma
             nueva_posicion_x -= self.velocidad
         elif self.direccion == "abajo":
             nueva_posicion_x += self.velocidad
@@ -151,15 +151,13 @@ class Fantasmas:
             nueva_posicion_y -= self.velocidad
         elif self.direccion == "derecha":
             nueva_posicion_y += self.velocidad
-
+        # Verifica si las nuevas posiciones están dentro de los límites del tablero y no hay paredes (valor 0)
         if (
             nueva_posicion_x >= 0
             and nueva_posicion_x < len(tablero)
             and nueva_posicion_y >= 0
             and nueva_posicion_y < len(tablero[0])
             and tablero[nueva_posicion_x][nueva_posicion_y] != 0
-
-
         ):
             self.posicion_x = nueva_posicion_x
             self.posicion_y = nueva_posicion_y
@@ -170,7 +168,7 @@ class Fantasmas:
             self.direccion = random.choice(direcciones_posibles)
 
     def cambiar_a_vulnerable(self):
-        self.imagen = self.estadoVulnerable
+        self.imagen = self.estadoVulnerable#cambia la imagen del fantasma a la de vulnerable
         self.estado=True
         self.velocidad=1
     def cambiar_a_normal(self):
@@ -178,11 +176,11 @@ class Fantasmas:
         self.velocidad=1
 
     def dibujar(self, pantalla):
-        if self.color == "Rojo":
-            if self.estado == True:
-                pantalla.blit(self.imagen, (self.posicion_y * 20, self.posicion_x * 20))
+        if self.color == "Rojo":# Verifica el color del fantasma
+            if self.estado == True:# Verifica si el estado del fantasma es vulnerable
+                pantalla.blit(self.imagen, (self.posicion_y * 20, self.posicion_x * 20))# Si es vulnerable, dibuja la imagen vulnerable en la posición del fantasma
             else:
-                pantalla.blit(self.fantasmaRojo, (self.posicion_y * 20, self.posicion_x * 20))
+                pantalla.blit(self.fantasmaRojo, (self.posicion_y * 20, self.posicion_x * 20))# Si no es vulnerable, dibuja la imagen normal del fantasma en la posición del fantasma
         elif self.color == "Rosa":
             if self.estado == True:
                 pantalla.blit(self.imagen, (self.posicion_y * 20, self.posicion_x * 20))
@@ -219,13 +217,13 @@ class Pacman:
 
 
 
-    def cambiar_estado(self, nuevo_estado):
+    def cambiar_estado(self, nuevo_estado):# Método para cambiar el estado de Pac-Man
         self.estado = nuevo_estado
 
-    def cambiar_velocidad(self, nueva_velocidad):
+    def cambiar_velocidad(self, nueva_velocidad): # Método para cambiar la velocidad de Pac-Man
         self.velocidad = nueva_velocidad
 
-    def mover(self, direccion, tablero):
+    def mover(self, direccion, tablero):# Método para mover a Pac-Man en una dirección dada
         # Calcula las nuevas coordenadas después de moverse
         nueva_posicion_x = self.posicion_x
         nueva_posicion_y = self.posicion_y
@@ -278,10 +276,7 @@ class Pacman:
 
 class Juego:
     def __init__(self):
-        self.tiempo_transcurrido = 0
-        self.tiempo_inicial = 0
         self.fuente = pygame.font.Font(None, 36)
-        self.numero_de_juego = 1
         self.tablero = [
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 2, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 2, 0],
@@ -331,18 +326,18 @@ class Juego:
 
 
     def detectar_colision(self, pac_man, fantasmas, pacman):
-        if pacman.agresivo == False:
-            for fantasma in fantasmas:
-                if pac_man.posicion_x == fantasma.posicion_x and pac_man.posicion_y == fantasma.posicion_y:
-                    puntaje_jugador = f"Tu puntaje fue: {self.score}"
+        if pacman.agresivo == False: # Verifica si Pac-Man no está en modo agresivo
+            for fantasma in fantasmas:# Itera sobre la lista de fantasmas
+                if pac_man.posicion_x == fantasma.posicion_x and pac_man.posicion_y == fantasma.posicion_y:# Verifica si la posición de Pac-Man coincide con la posición de un fantasma
+                    puntaje_jugador = f"Tu puntaje fue: {self.score}"# Muestra un cuadro de diálogo con el puntaje del jugador y solicita su nombre
                     nombre_jugador = simpledialog.askstring("Misión Fracasada",
                                                             puntaje_jugador + "\nIntroduce tu nombre:")
 
-                    self.game_over = True
-                    self.guardar_puntaje(nombre_jugador, self.score)
+                    self.game_over = True# Establece el estado de juego como "game over"
+                    self.guardar_puntaje(nombre_jugador, self.score)# Guarda el puntaje del jugador junto con su nombre
 
-                    print("Nombre del jugador:", nombre_jugador)
-                    mostrar_menu()
+                    print("Nombre del jugador:", nombre_jugador)#para verificar el guardado lo imprime en la consola
+                    mostrar_menu()#muestra el menu
 
     def guardar_puntaje(self, nombre_jugador, score):
         # Lee los puntajes actuales del archivo
@@ -376,11 +371,10 @@ class Juego:
         imagen_comida = pygame.image.load("comida.png")
 
         def actualizar_nivel(nivel, tablero, score):
-            if score >=2500 and nivel == 1:
-                self.nivel = 2
+            if score >=2500 and nivel == 1: # Verifica si el puntaje es mayor o igual a 2500 y el nivel actual es 1
+                self.nivel = 2 # Establece el nivel del juego como 2
 
-                for fila in range(
-                        len(tablero)):  # actualiza el tablero con los valores originales de las capsulas y alimentos
+                for fila in range(len(tablero)):  # actualiza el tablero con los valores originales de las capsulas y alimentos
                     for columna in range(len(tablero[fila])):
                         if tablero[fila][columna] == 4:
                             tablero[fila][columna] = 1
@@ -388,8 +382,8 @@ class Juego:
                             tablero[fila][columna] = 2
                         if tablero[fila][columna] == 6:
                             tablero[fila][columna] = 3
-            if self.nivel == 2 and len(fantasmas)==0:
-                fantasmaVerde = Fantasmas(3, 31, 26,"Verde")  # Cambia las coordenadas y el color según tu elección
+            if self.nivel == 2 and len(fantasmas)==0: # Verifica si el nivel es 2 y no hay fantasmas en la lista
+                fantasmaVerde = Fantasmas(3, 31, 26,"Verde")  # Crea instancias de fantasmas para el segundo nivel y los agrega a la lista de fantasmas
                 fantasmas.append(fantasmaVerde)
                 fantasmas.append(fantasmaRojo)
                 fantasmas.append(fantasmaRosa)
@@ -404,7 +398,7 @@ class Juego:
         fantasmaNaranja = Fantasmas(3, 31, 26, "Naranja") # Esquina inferior derecha
 
 
-        # Agregar las instancias a una lista de fantasmas
+
 
         fantasmas = [fantasmaRojo, fantasmaRosa, fantasmaCeleste, fantasmaNaranja]
 
@@ -426,13 +420,13 @@ class Juego:
                     pausado = not pausado  # Cambia el estado de pausado
                     print(self.tablero)
 
-            if not pausado:
+            if not pausado:#verifica si no esta pausado
                 if self.nivel==1:
-                    actualizar_nivel(juego.nivel, juego.tablero, juego.score)
+                    actualizar_nivel(juego.nivel, juego.tablero, juego.score) # Actualiza el nivel si es el nivel 1
                 elif self.nivel==2:
                     pass
                 keys = pygame.key.get_pressed()
-                if keys[pygame.K_UP]:
+                if keys[pygame.K_UP]:# Captura las teclas presionadas para mover al pacman
                     pacman.mover("arriba", juego.tablero)
                     efecto_comer.play()
                 if keys[pygame.K_DOWN]:
@@ -444,18 +438,18 @@ class Juego:
                 if keys[pygame.K_RIGHT]:
                     pacman.mover("derecha", juego.tablero)
                     efecto_comer.play()
-                if juego.nivel == 2 and juego.score >= 5000:
+                if juego.nivel == 2 and juego.score >= 5000:# Verifica si es el nivel 2 y se alcanzó el puntaje requerido
                     puntaje_jugador = f"Tu puntaje fue: {self.score}"
                     nombre_jugador = simpledialog.askstring("ganaste\n tu puntaje fue:",puntaje_jugador + "\nIntroduce tu nombre:")
                     self.guardar_puntaje(nombre_jugador, self.score)
                     mostrar_menu()
-                juego.detectar_colision(pacman, fantasmas, pacman)
-                pacman.comer(juego.tablero, juego)
+                juego.detectar_colision(pacman, fantasmas, pacman)#verifica las colisiones
+                pacman.comer(juego.tablero, juego)#llamada de la funcion para comer
                 pacman.comer_alimento(juego.tablero)
-                if not pacman.agresivo:
-                    if juego.tablero[pacman.posicion_x][pacman.posicion_y] == 2:
+                if not pacman.agresivo:#verifica si el pacman esta agresivo
+                    if juego.tablero[pacman.posicion_x][pacman.posicion_y] == 2:#verifica si pacamn comio una capsula
                         pacman.comer_capsula(juego.tablero)
-                        pacman.agresivo = True
+                        pacman.agresivo = True#vuelve a pacman agresivo
                         pacman.tiempo_agresivo = pygame.time.get_ticks()  # Registra el tiempo actual
                         # Verifica si Pac-Man está en modo agresivo y controla el tiempo de duración
                 if pacman.agresivo:
@@ -464,52 +458,48 @@ class Juego:
                         pacman.agresivo = False  # Pac-Man vuelve a ser vulnerable
                         for fantasma in fantasmas:
                             fantasma.cambiar_a_normal()
-                        # Dibuja el tablero y otros elementos gráficos aquí...
+
 
                 if pacman.agresivo:
-                    pacman.eliminar_fantasma(fantasmas)
+                    pacman.eliminar_fantasma(fantasmas)#elimina a los fantasmas si pacman esta agresivo
                 if pacman.agresivo:
                     for fantasma in fantasmas:
-                        fantasma.cambiar_a_vulnerable()
+                        fantasma.cambiar_a_vulnerable()#cambia la imagen de los fantasmas
 
-                if self.tiempo_inicial == 0:
-                    self.tiempo_inicial = time.time()
 
-                # Calcula el tiempo transcurrido
-                tiempo_actual = time.time()
 
                 pantalla.fill((0, 0, 0))
                 # Dibuja el tablero y otros elementos gráficos
                 pantalla.fill((0, 0, 0))  # Limpia la pantalla con color negro
 
-                puntaje_texto = self.fuente.render(f"Puntaje: {self.score}", True, (255, 255, 255))
+                puntaje_texto = self.fuente.render(f"Puntaje: {self.score}", True, (255, 255, 255))# Crear una superficie de texto para el puntaje con la fuente definida previamente
 
                 nivel_texto= self.fuente.render(f"nivel:{int(self.nivel)}", True, (255,255,255))
-                pantalla.blit(puntaje_texto, (750, 50))
-                pantalla.blit(nivel_texto, (750, 100))
+                pantalla.blit(puntaje_texto, (750, 50))# Mostrar el puntaje en la pantalla
+                pantalla.blit(nivel_texto, (750, 100))# Mostrar el nivel en la pantalla
 
-                pantalla.blit(pausa_btn, pausa_rect)
+                pantalla.blit(pausa_btn, pausa_rect)# Mostrar el botón de pausa en la pantalla
 
                 for fila in range(len(self.tablero)):
                     for columna in range(len(self.tablero[0])):
-                        if self.tablero[fila][columna] == 0:
+                        if self.tablero[fila][columna] == 0:# Verificar el valor en la posición actual del tablero
                             pygame.draw.rect(pantalla, (0, 0, 255),
                                              (columna * 20, fila * 20, 20, 20))  # Pared (rectángulo azul)
-                        elif self.tablero[fila][columna] == 1:
+                        elif self.tablero[fila][columna] == 1:# Verificar el valor en la posición actual del tablero
                             pygame.draw.ellipse(pantalla, (255, 255, 0),
                                                 (columna * 20 + 5, fila * 20 + 5, 10, 10))  # Punto (elipse amarilla)
-                        elif self.tablero[fila][columna] == 2:
+                        elif self.tablero[fila][columna] == 2:# Verificar el valor en la posición actual del tablero
                             pygame.draw.ellipse(pantalla, (255, 0, 0),
                                                 (columna * 20 + 5, fila * 20 + 5, 10, 10))  # Cápsula (elipse roja)
-                        elif self.tablero[fila][columna] == 3:
+                        elif self.tablero[fila][columna] == 3:# Verificar el valor en la posición actual del tablero
                             pantalla.blit(imagen_comida, (columna * 20, fila * 20))  # Comida (imagen)
                 pacman.dibujar(pantalla)  # Dibuja a PacMan en la pantalla
 
-                for fantasma in fantasmas:
+                for fantasma in fantasmas:#dibuja a los fantasmas en el juego
                     fantasma.mover(juego.tablero)
                     fantasma.dibujar(pantalla)
 
-                pygame.display.update()
+                pygame.display.update()#actualiza la pantalla
                 reloj.tick(5)
 
 
