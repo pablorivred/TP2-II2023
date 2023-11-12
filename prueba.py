@@ -137,7 +137,20 @@ class Fantasmas:
         self.fantasmaAzul = pygame.image.load("fantasmas/fantasmaAzul.png")
         self.estadoVulnerable = pygame.image.load("fantasmas/Vulnerable.png")
 
-
+    def mostrar_fantasma(self):
+        print("Color de Fantasma:", self.color)
+        print("Estado de Fantasma:", self.estado)
+        print("Posición X de Fantasma:", self.posicion_x)
+        print("Posición Y de Fantasma:", self.posicion_y)
+        print("Velocidad de Fantasma:", self.velocidad)
+        print("Dirección de Fantasma:", self.direccion)
+        print("Imagen Rojo de Fantasma:", self.fantasmaRojo)
+        print("Imagen Celeste de Fantasma:", self.fantasmaCeleste)
+        print("Imagen Rosa de Fantasma:", self.fantasmaRosa)
+        print("Imagen Naranja de Fantasma:", self.fantasmaNaranja)
+        print("Imagen Verde de Fantasma:", self.fantasmaVerde)
+        print("Imagen Azul de Fantasma:", self.fantasmaAzul)
+        print("Imagen Vulnerable de Fantasma:", self.estadoVulnerable)
 
     def mover(self, tablero):
         nueva_posicion_x = self.posicion_x # Guarda las posiciones actuales del fantasma
@@ -214,6 +227,18 @@ class Pacman:
         self.imagen_abierto = pygame.image.load("pacman_abierto.png")
         self.imagen_cerrado = pygame.image.load("pacman_cerrado.png")
         self.boca_abierta = True
+
+    def mostrar_pacman(self):
+        print("Estado de Pacman:", self.estado)
+        print("Posición X:", self.posicion_x)
+        print("Posición Y:", self.posicion_y)
+        print("Velocidad:", self.velocidad)
+        print("Agresivo:", self.agresivo)
+        print("Tiempo Agresivo:", self.tiempo_agresivo)
+        print("Duración Agresivo:", self.duracion_agresivo)
+        print("Boca Abierta:", self.boca_abierta)
+        print("Imagen Abierto:", self.imagen_abierto)
+        print("Imagen Cerrado:", self.imagen_cerrado)
 
 
 
@@ -371,7 +396,7 @@ class Juego:
         imagen_comida = pygame.image.load("comida.png")
 
         def actualizar_nivel(nivel, tablero, score):
-            if score >=2500 and nivel == 1: # Verifica si el puntaje es mayor o igual a 2500 y el nivel actual es 1
+            if score >=1500 and nivel == 1: # Verifica si el puntaje es mayor o igual a 2500 y el nivel actual es 1
                 self.nivel = 2 # Establece el nivel del juego como 2
 
                 for fila in range(len(tablero)):  # actualiza el tablero con los valores originales de las capsulas y alimentos
@@ -419,6 +444,12 @@ class Juego:
                 elif evento.type == pygame.MOUSEBUTTONDOWN:
                     pausado = not pausado  # Cambia el estado de pausado
                     print(self.tablero)
+                    pacman.mostrar_pacman()
+                    fantasmaCeleste.mostrar_fantasma()
+                    fantasmaNaranja.mostrar_fantasma()
+                    fantasmaRosa.mostrar_fantasma()
+                    fantasmaRojo.mostrar_fantasma()
+
 
             if not pausado:#verifica si no esta pausado
                 if self.nivel==1:
@@ -438,7 +469,7 @@ class Juego:
                 if keys[pygame.K_RIGHT]:
                     pacman.mover("derecha", juego.tablero)
                     efecto_comer.play()
-                if juego.nivel == 2 and juego.score >= 5000:# Verifica si es el nivel 2 y se alcanzó el puntaje requerido
+                if juego.nivel == 2 and juego.score >= 2500:# Verifica si es el nivel 2 y se alcanzó el puntaje requerido
                     puntaje_jugador = f"Tu puntaje fue: {self.score}"
                     nombre_jugador = simpledialog.askstring("ganaste\n tu puntaje fue:",puntaje_jugador + "\nIntroduce tu nombre:")
                     self.guardar_puntaje(nombre_jugador, self.score)
